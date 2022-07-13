@@ -12,14 +12,14 @@ if ( is_readable( __DIR__ . '/../vendor/autoload.php' ) ) {
 /**
  * Manually determine what test suites we're running to prevent running functional test scripts if not required.
  */
-$args = $_SERVER['argv'];
-
+$args        = $_SERVER['argv'];
 $test_suites = [];
 for ( $i = 0; $i < count( $args ); $i ++ ) {
 	if ( preg_match( '/--testsuite=(.+)/', $args[ $i ], $matches ) ) {
 		$test_suites[] = $matches[1];
 	}
-	if ( $args[ $i ] === '--testsuite' ) {
+
+	if ( '--testsuite' === $args[ $i ] ) {
 		$test_suites[] = $args[ $i + 1 ];
 		$i ++;
 	}
@@ -30,7 +30,6 @@ if ( ! empty( $test_suites ) && ! in_array( 'integration', $test_suites, true ) 
 }
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
-
 if ( ! $_tests_dir ) {
 	$_tests_dir = rtrim( sys_get_temp_dir(), '/\\' ) . '/wordpress-tests-lib';
 }
