@@ -39,7 +39,8 @@ define( 'AWESOMEMOTIVE_WP_PLUGIN_VERSION', '1.0.0' );
 function activate_plugin() {
 
 }
-register_activation_hook( __FILE__, 'activate_plugin' );
+
+register_activation_hook( __FILE__, __NAMESPACE__ . '\\activate_plugin' );
 
 /**
  * Call back function that runs during plugin deactivation.
@@ -47,7 +48,8 @@ register_activation_hook( __FILE__, 'activate_plugin' );
 function deactivate_plugin() {
 
 }
-register_deactivation_hook( __FILE__, 'deactivate_plugin' );
+
+register_deactivation_hook( __FILE__, __NAMESPACE__ . '\\deactivate_plugin' );
 
 /**
  * Composer Autoload file.
