@@ -25,7 +25,7 @@ for ( $i = 0; $i < count( $args ); $i ++ ) {
 	}
 }
 
-if ( ! empty( $test_suites ) && ! in_array( 'integration', $test_suites ) ) {
+if ( ! empty( $test_suites ) && ! in_array( 'integration', $test_suites, true ) ) {
 	return;
 }
 
@@ -54,7 +54,9 @@ if ( ! file_exists( $_tests_dir . '/includes/functions.php' ) ) {
 	exit( 1 );
 }
 
-// Give access to tests_add_filter() function.
+/**
+ * Give access to tests_add_filter() function.
+ */
 require_once $_tests_dir . '/includes/functions.php';
 
 /**
@@ -66,9 +68,11 @@ function _manually_load_plugin() {
 
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
-if ( $_tests_dir === '/usr/src/vendor/wordpress' ) {
+if ( '/usr/src/vendor/wordpress' === $_tests_dir ) {
 	define( 'WP_TESTS_CONFIG_FILE_PATH', __DIR__ . '/../tests/integration/wp-tests-config.php' );
 }
 
-// Start up the WP testing environment.
+/**
+ * Start up the WP testing environment.
+ */
 require $_tests_dir . '/includes/bootstrap.php';
