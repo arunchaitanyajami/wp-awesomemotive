@@ -68,7 +68,7 @@ function _manually_load_plugin() {
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 if ( '/usr/src/vendor/wordpress' === $_tests_dir ) {
-	define( 'WP_TESTS_CONFIG_FILE_PATH', __DIR__ . '/../tests/integration/wp-tests-config.php' );
+	define( 'WP_TESTS_CONFIG_FILE_PATH', __DIR__ . '/../tests/wp-tests-config.php' );
 }
 
 /**
