@@ -48,3 +48,10 @@ function deactivate_plugin() {
 
 }
 register_deactivation_hook( __FILE__, 'deactivate_plugin' );
+
+/**
+ * Composer Autoload file.
+ */
+if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
+	include __DIR__ . '/vendor/autoload.php';
+}
