@@ -5,9 +5,15 @@
  * @package awesomemotive-wp-plugin
  */
 
-if ( is_readable( __DIR__ . '/../vendor/autoload.php' ) ) {
+if ( file_exists( __DIR__ . '/../vendor/autoload.php' ) ) {
 	require __DIR__ . '/../vendor/autoload.php';
 }
+
+// Looking for .env at the root directory
+use Symfony\Component\Dotenv\Dotenv;
+
+$dotenv = new Dotenv();
+$dotenv->load( __DIR__ . '/../.env' );
 
 /**
  * Manually determine what test suites we're running to prevent running functional test scripts if not required.
@@ -37,10 +43,10 @@ if ( ! $_tests_dir ) {
 if ( ! file_exists( $_tests_dir . '/includes/functions.php' ) ) {
 	echo( 'Installing WP Tests...' . PHP_EOL );
 	$cmd = sprintf(
-		__DIR__ . '/bootstrap/install-wp-tests.sh "%s" "%s" "%s" mysql latest true',
-		getenv( 'DB_NAME' ),
-		getenv( 'DB_USER' ),
-		getenv( 'DB_PASS' )
+		__DIR__ . '/../bin/install-wp-tests.sh "%s" "%s" "%s" mysql latest true',
+		$_ENV['TEST_DB_NAME'],
+		$_ENV['DB_USER'],
+		$_ENV['DB_PASSWORD']
 	);
 	echo( $cmd . PHP_EOL );
 	shell_exec(
