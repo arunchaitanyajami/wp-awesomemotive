@@ -119,14 +119,14 @@ workflows:
       - integration-test-php74-wordpress:
           matrix:
             parameters:
-              wp-version: [ "5.8","5.9" ]
+              wp-version: [ "6.0","5.9" ]
           filters:
             branches:
               ignore: /.*-built/
       - integration-test-php8-wordpress:
           matrix:
             parameters:
-              wp-version: [ "5.8","5.9" ]
+              wp-version: [ "6.0","5.9" ]
           filters:
             branches:
               ignore: /.*-built/
