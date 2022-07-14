@@ -32,12 +32,22 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 define( 'AWESOMEMOTIVE_WP_PLUGIN_VERSION', '1.0.0' );
+define( 'AWESOMEMOTIVE_SITE_OPTION', 'test_project_option' );
 
 /**
  * Call back function that runs during plugin activation.
  */
 function activate_plugin() {
-
+	update_option(
+		AWESOMEMOTIVE_SITE_OPTION,
+		array(
+			'num_rows'   => 5,
+			'human_date' => true,
+			'emails'     => array(
+				get_bloginfo( 'admin_email' ),
+			),
+		) 
+	);
 }
 
 register_activation_hook( __FILE__, __NAMESPACE__ . '\\activate_plugin' );
@@ -46,7 +56,7 @@ register_activation_hook( __FILE__, __NAMESPACE__ . '\\activate_plugin' );
  * Call back function that runs during plugin deactivation.
  */
 function deactivate_plugin() {
-
+	delete_option( AWESOMEMOTIVE_SITE_OPTION );
 }
 
 register_deactivation_hook( __FILE__, __NAMESPACE__ . '\\deactivate_plugin' );
