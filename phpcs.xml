@@ -36,11 +36,11 @@
     <exclude-pattern>/languages/*</exclude-pattern>
 
     <rule ref="WordPress.Files.FileName.InvalidClassFileName">
-        <exclude-pattern>includes/*</exclude-pattern>
+        <exclude-pattern>inc/*</exclude-pattern>
         <exclude-pattern>tests/*</exclude-pattern>
     </rule>
     <rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
-        <exclude-pattern>includes/*</exclude-pattern>
+        <exclude-pattern>inc/*</exclude-pattern>
         <exclude-pattern>tests/*</exclude-pattern>
     </rule>
 </ruleset>
