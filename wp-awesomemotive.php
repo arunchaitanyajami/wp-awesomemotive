@@ -8,7 +8,7 @@
  * @wordpress-plugin
  * Plugin Name:       AwesomeMotive Plugin
  * Description:       Plugin that retrieves data from a remote API, and makes an admin-only accessible Vue app with three tabs: one that displays a graph, one that displays a table  and one that has a settings form.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            Arun Chaitanya Jami
  * Author URI:        https://github.com/arunchaitanyajami
  * License:           GPL-2.0+
@@ -31,7 +31,8 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'AWESOMEMOTIVE_WP_PLUGIN_VERSION', '1.0.0' );
+define( 'AWESOMEMOTIVE_WP_PLUGIN_VERSION', '1.0.2' );
+define( 'AWESOMEMOTIVE_PREFIX', 'wpam_' );
 define( 'AWESOMEMOTIVE_SITE_OPTION', 'test_project_option' );
 
 /**
@@ -50,7 +51,7 @@ function activate_plugin() {
 			'emails'     => array(
 				get_bloginfo( 'admin_email' ),
 			),
-		) 
+		)
 	);
 }
 
@@ -74,3 +75,21 @@ register_deactivation_hook( __FILE__, __NAMESPACE__ . '\\deactivate_plugin' );
 if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
 	include __DIR__ . '/vendor/autoload.php';
 }
+
+/**
+ * Initialize cron job.
+ */
+( new CronJob() )->init();
+
+/**
+ * Loads and defines the internationalization files for this plugin so that it is ready for translation.
+ */
+function load_textdomain() {
+	load_plugin_textdomain(
+		'awesomemotive-wp-plugin',
+		false,
+		dirname( plugin_basename( __FILE__ ) ) . '/languages/'
+	);
+}
+
+add_action( 'init', __NAMESPACE__ . '\\load_textdomain' );
