@@ -2,7 +2,7 @@
 /**
  * Schedule cron to fetch data from external endpoint on a hourly basis.
  *
- * @package awesomemotive-wp-plugin
+ * @package AwesomeMotive
  * @since 1.0.2
  */
 
@@ -11,7 +11,7 @@ namespace AwesomeMotive;
 /**
  * Class CronJob.
  *
- * @package awesomemotive-wp-plugin
+ * @package AwesomeMotive
  */
 class CronJob {
 

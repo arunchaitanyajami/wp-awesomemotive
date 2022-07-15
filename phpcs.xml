@@ -34,12 +34,18 @@
     <exclude-pattern>/build/*</exclude-pattern>
     <exclude-pattern>/wordpress/*</exclude-pattern>
     <exclude-pattern>/languages/*</exclude-pattern>
+    <exclude-pattern>/src/*</exclude-pattern>
+    <exclude-pattern>webpack.*.js</exclude-pattern>
 
     <rule ref="WordPress.Files.FileName.InvalidClassFileName">
         <exclude-pattern>inc/*</exclude-pattern>
         <exclude-pattern>tests/*</exclude-pattern>
     </rule>
     <rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
+        <exclude-pattern>inc/*</exclude-pattern>
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
+    <rule ref="Internal.NoCodeFound">
         <exclude-pattern>inc/*</exclude-pattern>
         <exclude-pattern>tests/*</exclude-pattern>
     </rule>
