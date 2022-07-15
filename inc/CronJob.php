@@ -91,9 +91,9 @@ class CronJob {
 	/**
 	 * Lead data from remote endpoint.
 	 *
-	 * @return mixed
+	 * @return object
 	 */
-	private function load_request(): mixed {
+	private function load_request(): object {
 		$url  = 'https://miusage.com/v1/challenge/2/static/';
 		$json = array();
 
@@ -114,6 +114,6 @@ class CronJob {
 			$json = array();
 		}
 
-		return $json;
+		return (object) $json;
 	}
 }
