@@ -63,6 +63,26 @@ class AssetLoader {
 	 * @since 1.0.3
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script( $this->plugin_name, AWESOMEMOTIVE_DIR_URL . 'build/index.js', array( 'jquery', 'wp-element' ), $this->version, true );
+		$editor_settings = array(
+			'ajaxUrl'  => esc_url( admin_url( 'admin-ajax.php', 'relative' ) ),
+			'wp_nonce' => wp_create_nonce( 'awesomemotive-wp-plugin' ),
+		);
+		wp_register_script(
+			$this->plugin_name,
+			AWESOMEMOTIVE_DIR_URL . 'build/index.js',
+			array(
+				'jquery',
+				'wp-element',
+			),
+			$this->version,
+			true
+		);
+
+		$filter_name     = wp_sprintf( '%seditorSettings', esc_attr( AWESOMEMOTIVE_PREFIX ) );
+		$editor_settings = apply_filters( $filter_name, $editor_settings );
+		$object_name     = wp_sprintf( '%seditorSettings', esc_attr( AWESOMEMOTIVE_PREFIX ) );
+
+		wp_localize_script( $this->plugin_name, $object_name, $editor_settings );
+		wp_enqueue_script( $this->plugin_name );
 	}
 }
