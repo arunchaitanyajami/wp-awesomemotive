@@ -51,7 +51,9 @@ exports[`App Is Expected to have Settings, Graph and Table Tab 1`] = `
       id="react-tabs-1"
       role="tabpanel"
     >
-      Content 1
+      <div>
+        Settings
+      </div>
     </div>
     <div
       aria-labelledby="react-tabs-2"
