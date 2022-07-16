@@ -3,7 +3,7 @@
  * AwesomeMotive Plugin
  *
  * @since             1.0
- * @package           awesomemotive-wp-plugin
+ * @package           AwesomeMotive
  *
  * @wordpress-plugin
  * Plugin Name:       AwesomeMotive Plugin
@@ -18,6 +18,8 @@
  */
 
 namespace AwesomeMotive;
+
+use AwesomeMotive\Admin\Page;
 
 /**
  * If this file is called directly, abort.
@@ -34,6 +36,8 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'AWESOMEMOTIVE_WP_PLUGIN_VERSION', '1.0.2' );
 define( 'AWESOMEMOTIVE_PREFIX', 'wpam_' );
 define( 'AWESOMEMOTIVE_SITE_OPTION', 'test_project_option' );
+define( 'AWESOMEMOTIVE_DIR_PATH', plugin_dir_path( __FILE__ ) );
+define( 'AWESOMEMOTIVE_DIR_URL', plugin_dir_url( __FILE__ ) );
 
 /**
  * Call back function that runs during plugin activation.
@@ -80,6 +84,11 @@ if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
  * Initialize cron job.
  */
 ( new CronJob() )->init();
+
+/**
+ * Create admin menu page.
+ */
+( new Page() )->init();
 
 /**
  * Loads and defines the internationalization files for this plugin so that it is ready for translation.

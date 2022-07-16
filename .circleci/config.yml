@@ -108,11 +108,41 @@ jobs:
       - deploy:
           name: Deploy -built branch to github
           command: bash <(curl -s "https://raw.githubusercontent.com/Automattic/vip-go-build/master/deploy.sh")
+  test-js:
+    docker:
+      - image: circleci/php:7.4.16-node-browsers
+    steps:
+      - checkout
+      - run:
+          name: Install Packages
+          command: npm install
+      - run:
+          name: Run Js Unit Test
+          command: npm run test:unit
+  lint-js:
+    docker:
+      - image: circleci/php:7.4.16-node-browsers
+    steps:
+      - checkout
+      - run:
+          name: Install Packages
+          command: npm install
+      - run:
+          name: Run Js Unit Test
+          command: npm run lint:js
 workflows:
   version: 2
   test_build_deploy:
     jobs:
       - lint:
+          filters:
+            branches:
+              ignore: /.*-built/
+      - test-js:
+          filters:
+            branches:
+              ignore: /.*-built/
+      - lint-js:
           filters:
             branches:
               ignore: /.*-built/
@@ -133,6 +163,8 @@ workflows:
       - build:
           requires:
             - lint
+            - lint-js
+            - test-js
             - integration-test-php74-wordpress
             - integration-test-php8-wordpress
           filters:
