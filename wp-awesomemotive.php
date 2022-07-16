@@ -19,8 +19,6 @@
 
 namespace AwesomeMotive;
 
-use AwesomeMotive\Admin\Page;
-
 /**
  * If this file is called directly, abort.
  */
@@ -80,6 +78,10 @@ if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
 	include __DIR__ . '/vendor/autoload.php';
 }
 
+use AwesomeMotive\Admin\AjaxEndpoint;
+use AwesomeMotive\Admin\Page;
+use function AwesomeMotive\data_endpoint_ajax_callback;
+
 /**
  * Initialize cron job.
  */
@@ -89,6 +91,11 @@ if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
  * Create admin menu page.
  */
 ( new Page() )->init();
+
+/**
+ * Ajax Endpoints.
+ */
+( new AjaxEndpoint() )->init( 'data_endpoint', 'AwesomeMotive\data_endpoint_ajax_callback' );
 
 /**
  * Loads and defines the internationalization files for this plugin so that it is ready for translation.

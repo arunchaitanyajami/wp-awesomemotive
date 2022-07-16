@@ -80,7 +80,7 @@ class AssetLoader {
 
 		$filter_name     = wp_sprintf( '%seditorSettings', esc_attr( AWESOMEMOTIVE_PREFIX ) );
 		$editor_settings = apply_filters( $filter_name, $editor_settings );
-		$object_name     = wp_sprintf( '%seditorSettings', esc_attr( AWESOMEMOTIVE_PREFIX ) );
+		$object_name     = wp_sprintf( '%sEditorSettings', esc_attr( ucfirst( str_replace( '_', '', AWESOMEMOTIVE_PREFIX ) ) ) );
 
 		wp_localize_script( $this->plugin_name, $object_name, $editor_settings );
 		wp_enqueue_script( $this->plugin_name );

@@ -2,6 +2,9 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { useState } from '@wordpress/element';
 import * as qs from 'query-string';
+import Settings from './Component/Settings'
+import Graph from './Component/Graph'
+import Table from './Component/Table'
 
 export default () => {
 	const { getTabIndex } = qs.parse( location.search );
@@ -19,6 +22,10 @@ export default () => {
 			index;
 		window.history.pushState( { path: newUrl }, '', newUrl );
 	};
+	
+	const fetchMiUsageData = () => {
+		
+	}
 
 	return (
 		<Tabs
@@ -30,9 +37,9 @@ export default () => {
 				<Tab>Table</Tab>
 				<Tab>Graph</Tab>
 			</TabList>
-			<TabPanel>Content 1</TabPanel>
-			<TabPanel>Content 2</TabPanel>
-			<TabPanel>Content 3</TabPanel>
+			<TabPanel><Settings /></TabPanel>
+			<TabPanel><Table /></TabPanel>
+			<TabPanel><Graph /></TabPanel>
 		</Tabs>
 	);
 };

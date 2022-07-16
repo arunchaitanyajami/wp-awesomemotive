@@ -25,17 +25,17 @@ class AjaxEndpoint {
 	/**
 	 * Ajax Callback.
 	 *
-	 * @var callable
+	 * @var string
 	 */
-	private $callback;
+	private string $callback;
 
 	/**
 	 * Initiate the class.
 	 *
-	 * @param string   $name Name of ajax action.
-	 * @param callable $callback Call back.
+	 * @param string $name Name of ajax action.
+	 * @param string $callback Call back.
 	 */
-	public function init( string $name, callable $callback ) {
+	public function init( string $name, string $callback ) {
 		$ajax_hook_name        = wp_sprintf( 'wp_ajax_', esc_html( $name ) );
 		$nopriv_ajax_hook_name = wp_sprintf( 'wp_ajax_nopriv_', esc_html( $name ) );
 		add_action( $ajax_hook_name, array( $this, 'callback' ) );
@@ -63,6 +63,9 @@ class AjaxEndpoint {
 			die( 'Unable to call the function | method provided' );
 		}
 
+		/**
+		 * Data that returns from call back can be anything but wp_json_encode 1st perimeter is of type mixed.
+		 */
 		echo wp_json_encode( $callback() );
 
 		// Always die in functions echoing ajax content.

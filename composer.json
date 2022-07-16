@@ -58,7 +58,8 @@
   "autoload": {
     "psr-4": {
       "AwesomeMotive\\": "inc/"
-    }
+    },
+    "files": ["inc/functions.php"]
   },
   "autoload-dev": {
     "psr-4": {
