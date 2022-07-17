@@ -80,7 +80,6 @@ if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
 
 use AwesomeMotive\Admin\AjaxEndpoint;
 use AwesomeMotive\Admin\Page;
-use function AwesomeMotive\data_endpoint_ajax_callback;
 
 /**
  * Initialize cron job.
@@ -93,7 +92,7 @@ use function AwesomeMotive\data_endpoint_ajax_callback;
 ( new Page() )->init();
 
 /**
- * Ajax Endpoints.
+ * Load Ajax Endpoints.
  */
 ( new AjaxEndpoint() )->init( 'data_endpoint', 'AwesomeMotive\data_endpoint_ajax_callback' );
 

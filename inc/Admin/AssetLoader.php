@@ -63,17 +63,16 @@ class AssetLoader {
 	 * @since 1.0.3
 	 */
 	public function enqueue_scripts() {
-		$editor_settings = array(
-			'ajaxUrl'  => esc_url( admin_url( 'admin-ajax.php', 'relative' ) ),
-			'wp_nonce' => wp_create_nonce( 'awesomemotive-wp-plugin' ),
+		$dependency_assets = include AWESOMEMOTIVE_DIR_PATH . 'build/index.asset.php';
+		$editor_settings   = array(
+			'ajaxUrl'           => esc_url( admin_url( 'admin-ajax.php', 'relative' ) ),
+			'wp_nonce'          => wp_create_nonce( 'awesomemotive-wp-plugin' ),
+			'is_user_logged_in' => is_user_logged_in(),
 		);
 		wp_register_script(
 			$this->plugin_name,
 			AWESOMEMOTIVE_DIR_URL . 'build/index.js',
-			array(
-				'jquery',
-				'wp-element',
-			),
+			$dependency_assets['dependencies'],
 			$this->version,
 			true
 		);

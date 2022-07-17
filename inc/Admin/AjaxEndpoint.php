@@ -32,12 +32,13 @@ class AjaxEndpoint {
 	/**
 	 * Initiate the class.
 	 *
-	 * @param string $name Name of ajax action.
-	 * @param string $callback Call back.
+	 * @param string   $name Name of ajax action.
+	 * @param callable $callback Call back.
 	 */
-	public function init( string $name, string $callback ) {
-		$ajax_hook_name        = wp_sprintf( 'wp_ajax_', esc_html( $name ) );
-		$nopriv_ajax_hook_name = wp_sprintf( 'wp_ajax_nopriv_', esc_html( $name ) );
+	public function init( string $name, callable $callback ) {
+		$ajax_hook_name        = wp_sprintf( 'wp_ajax_%s', esc_html( $name ) );
+		$nopriv_ajax_hook_name = wp_sprintf( 'wp_ajax_nopriv_%s', esc_html( $name ) );
+
 		add_action( $ajax_hook_name, array( $this, 'callback' ) );
 		add_action( $nopriv_ajax_hook_name, array( $this, 'callback' ) );
 
@@ -53,22 +54,47 @@ class AjaxEndpoint {
 		$callback   = $this->callback;
 
 		if ( ! wp_verify_nonce( $nonce, 'awesomemotive-wp-plugin' ) ) {
-			die( 'Nonce value cannot be verified.' );
+			echo wp_json_encode(
+				array(
+					'status'  => 400,
+					'message' => esc_html( 'Nonce value cannot be verified.' ),
+				)
+			);
+			wp_die();
 		}
 
-		if ( ! is_user_logged_in() || ! user_can_access_admin_page() || ! current_user_can( 'manage_options' ) ) {
-			die( 'You are not allowed to perform this action' );
+		if ( ! current_user_can( 'manage_options' ) ) {
+			echo wp_json_encode(
+				array(
+					'status'  => 400,
+					'message' => esc_html( 'You are not allowed to perform this action' ),
+				)
+			);
+			wp_die();
 		}
+
 		if ( ! is_callable( $callback ) ) {
-			die( 'Unable to call the function | method provided' );
+			echo wp_json_encode(
+				array(
+					'status'  => 400,
+					'message' => wp_sprintf( 'Unable to call the function | method provided %s', esc_html( $callback ) ),
+				)
+			);
+			wp_die();
 		}
 
 		/**
 		 * Data that returns from call back can be anything but wp_json_encode 1st perimeter is of type mixed.
 		 */
-		echo wp_json_encode( $callback() );
+		echo wp_json_encode(
+			array(
+				'status'  => 200,
+				'message' => 'Data fetched successfully',
+				'data'    => call_user_func( $callback ),
+			) 
+		);
 
 		// Always die in functions echoing ajax content.
-		die();
+		wp_die();
 	}
 }
