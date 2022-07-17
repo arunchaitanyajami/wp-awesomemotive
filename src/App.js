@@ -39,7 +39,7 @@ export default () => {
   const fetchMiUsageData = () => {
     const formData = new FormData()
 
-    formData.append('action', 'data_endpoint')
+    formData.append('action', 'all_data')
     formData.append('wpam_nonce', deafultOptions.wp_nonce)
 
     const params = new URLSearchParams(formData)
@@ -81,7 +81,7 @@ export default () => {
 
   useEffect(() => {
     fetchMiUsageData()
-  })
+  }, [])
 
   /**
    * Provide error notice.
@@ -99,8 +99,7 @@ export default () => {
 
   return (
     <div className={'awesomemotive-container'}>
-      {isError && message && <ErrorNotice type={'error'}/>}
-      {!isError && message && <ErrorNotice type={'success'}/>}
+      {isError && <ErrorNotice type={'error'}/>}
       <Tabs
         defaultIndex={tabIndex}
         onSelect={(index) => changeTabIndex(index)}
@@ -110,9 +109,9 @@ export default () => {
           <Tab>Table</Tab>
           <Tab>Graph</Tab>
         </TabList>
-        <TabPanel><Settings/></TabPanel>
-        <TabPanel><Table/></TabPanel>
-        <TabPanel><Graph/></TabPanel>
+        <TabPanel><Settings { ...data.settings }/></TabPanel>
+        <TabPanel><Table { ...data.table }/></TabPanel>
+        <TabPanel><Graph { ...data.graph } /></TabPanel>
       </Tabs>
     </div>
   )
