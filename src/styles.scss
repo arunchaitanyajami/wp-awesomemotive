@@ -1,26 +1,85 @@
 .awesomemotive-container {
-  .components-notice {
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
 
-    &.is-error {
-      background-color: rgba(255, 0, 0, 0.52);
-      color: white;
-      padding: 10px;
-    }
+	.components-notice {
+		padding: 10px;
+		margin-top: 10px;
+		margin-bottom: 10px;
 
-    p {
-      margin: 8px;
-    }
+		&.is-error {
+			background-color: rgba(255, 0, 0, 0.52);
+			color: #f00;
+			padding: 10px;
+		}
 
-    .components-notice__content {
-      width: 90%;
-      float: left;
-    }
-  }
+		p {
+			margin: 8px;
+		}
 
-  .awesomemotive-settings-container{
+		.components-notice__content {
+			width: 90%;
+			float: left;
+		}
+	}
 
-  }
+	.awesomemotive-settings-container {
+		display: grid;
+		grid-template-columns: 2fr 2fr;
+		grid-gap: 40px;
+
+		.awesomemotive-settings-form-inputs {
+			padding: 5px;
+			margin-bottom: 5px;
+
+			.awesomemotive-settings-add-inputs {
+				text-align: center;
+				background-color: #2271b1 !important;
+				border: none;
+				color: #f00;
+				padding: 15px 32px;
+				text-decoration: none;
+				font-size: 16px;
+				margin-left: 5px;
+
+				svg {
+					background-color: #fff;
+				}
+			}
+
+			.awesomemotive-settings-form-input-repeater {
+				margin-bottom: 15px;
+				width: 100%;
+				padding: 5px;
+
+				.awesomemotive-settings-form-input-error {
+					color: #f00000;
+					font-weight: 600;
+					font-size: 10px;
+				}
+
+				.awesomemotive-settings-form-input-control {
+					width: 50%;
+					float: left;
+					margin-right: 20px;
+					background-color: #ccc;
+					border-right: 1px solid #ccc;
+
+					label {
+						color: #000;
+						margin-left: 10px;
+						margin-top: 10px;
+					}
+				}
+
+				.awesomemotive-settings-form-input-trash-icon {
+					overflow: hidden;
+					margin: 10px;
+
+					svg {
+						color: #f00000;
+						cursor: pointer;
+					}
+				}
+			}
+		}
+	}
 }

@@ -52,6 +52,12 @@ class AjaxEndpoint {
 		$nonce_name = esc_attr( AWESOMEMOTIVE_PREFIX . 'nonce' );
 		$nonce      = filter_input( INPUT_POST, $nonce_name, FILTER_SANITIZE_STRING );
 		$callback   = $this->callback;
+		$type       = filter_input( INPUT_POST, 'type', FILTER_SANITIZE_STRING );
+		$data       = filter_input( INPUT_POST, 'data', FILTER_DEFAULT ); //@phpcs:ignore
+		if ( ! empty( $data ) ) {
+			$data = (array) json_decode( stripslashes( $data ) );
+		}
+
 
 		if ( ! wp_verify_nonce( $nonce, 'awesomemotive-wp-plugin' ) ) {
 			echo wp_json_encode(
@@ -90,8 +96,8 @@ class AjaxEndpoint {
 			array(
 				'status'  => 200,
 				'message' => 'Data fetched successfully',
-				'data'    => call_user_func( $callback ),
-			) 
+				'data'    => call_user_func( $callback, $type, $data ?: array() ), //@phpcs:ignore
+			)
 		);
 
 		// Always die in functions echoing ajax content.

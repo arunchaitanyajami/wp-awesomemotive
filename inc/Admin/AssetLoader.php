@@ -68,6 +68,7 @@ class AssetLoader {
 			'ajaxUrl'           => esc_url( admin_url( 'admin-ajax.php', 'relative' ) ),
 			'wp_nonce'          => wp_create_nonce( 'awesomemotive-wp-plugin' ),
 			'is_user_logged_in' => is_user_logged_in(),
+			'text_domain'       => 'awesomemotive-wp-plugin',
 		);
 		wp_register_script(
 			$this->plugin_name,

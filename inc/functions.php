@@ -26,10 +26,24 @@ function data_endpoint_ajax_callback() {
 /**
  * Get all settings.
  *
+ * @param string $type Type to fetch or update.
+ * @param array  $data Data to pass on update.
+ *
  * @return false|mixed|void
  */
-function get_all_settings_ajax_callback() {
-	return get_option( AWESOMEMOTIVE_SITE_OPTION, array() );
+function get_all_settings_ajax_callback( string $type = 'get', array $data = array() ) {
+	$settings = get_option( AWESOMEMOTIVE_SITE_OPTION, array() );
+	if ( ! empty( $data ) ) {
+		foreach ( $data as $key => $value ) {
+			$settings[ $key ] = $value;
+		}
+	}
+
+	if ( 'update' === $type ) {
+		update_option( AWESOMEMOTIVE_SITE_OPTION, $settings );
+	}
+
+	return $settings;
 }
 
 /**
