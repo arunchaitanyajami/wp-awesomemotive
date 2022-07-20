@@ -38,7 +38,7 @@ export default () => {
 	 * @constructor
 	 */
 	const ErrorNotice = () => (
-		<div className={'components-notice is-error'}>
+		<div className={ 'components-notice is-error' }>
 			<p>
 				An error occurred: <code>{ message }</code>.
 			</p>

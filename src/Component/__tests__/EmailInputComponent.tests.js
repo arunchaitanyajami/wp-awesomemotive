@@ -1,50 +1,63 @@
-import React from "react";
-import {render, screen} from '@testing-library/react';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import EmailInputComponent from "../EmailInputComponent";
+import EmailInputComponent from '../EmailInputComponent';
 
-let props = { value: 'test@test.com', keyId: 1, keyIndex: 1, saveEmail: jest.fn(), removeEmail: jest.fn()}
+let props = {
+	value: 'test@test.com',
+	keyId: 1,
+	keyIndex: 1,
+	saveEmail: jest.fn(),
+	removeEmail: jest.fn(),
+};
 
-describe('Email Input Component', () => {
-    let useEffect
-    let useState
-    beforeEach(() => {
-        useEffect = jest.spyOn(React, 'useEffect')
-        useState = jest.spyOn(React, 'useState')
-    })
+describe( 'Email Input Component', () => {
+	let useEffect;
+	let useState;
+	beforeEach( () => {
+		useEffect = jest.spyOn( React, 'useEffect' );
+		useState = jest.spyOn( React, 'useState' );
+	} );
 
-    afterEach(() => {
-        jest.clearAllMocks()
-    })
+	afterEach( () => {
+		jest.clearAllMocks();
+	} );
 
-    const mockUseEffect = () => {
-        useEffect.mockImplementationOnce(f => f())
-    }
+	const mockUseEffect = () => {
+		useEffect.mockImplementationOnce( ( f ) => f() );
+	};
 
+	it( 'Should Render the component', async () => {
+		useState
+			.mockReturnValueOnce( [ props.value, jest.fn() ] )
+			.mockReturnValueOnce( [ false, jest.fn() ] )
+			.mockReturnValueOnce( [ props.keyId, jest.fn() ] );
 
-    it('Should Render the component', async () => {
-        useState.
-        mockReturnValueOnce([props.value, jest.fn()]).
-        mockReturnValueOnce([false, jest.fn()]).
-        mockReturnValueOnce([props.keyId, jest.fn()])
+		const { container } = render( <EmailInputComponent { ...props } /> );
 
-        const {container} = render(<EmailInputComponent { ...props } />)
+		expect( container.querySelector( '#email_1' ).value ).toBe(
+			props.value
+		);
 
-        expect(container.querySelector('#email_1').value).toBe(props.value)
+		expect( container ).toMatchSnapshot();
+	} );
 
-        expect(container).toMatchSnapshot()
-    })
+	it( 'Should Render the component with error', async () => {
+		useState
+			.mockReturnValueOnce( [ props.value, jest.fn() ] )
+			.mockReturnValueOnce( [ true, jest.fn() ] )
+			.mockReturnValueOnce( [ props.keyId, jest.fn() ] );
 
-    it('Should Render the component with error', async () => {
-        useState.
-        mockReturnValueOnce([props.value, jest.fn()]).
-        mockReturnValueOnce([true, jest.fn()]).
-        mockReturnValueOnce([props.keyId, jest.fn()])
+		const { container } = render( <EmailInputComponent { ...props } /> );
 
-        const {container} = render(<EmailInputComponent { ...props } />)
-
-        expect(container.querySelector('.awesomemotive-settings-form-input-error')).toBeInTheDocument()
-        expect(screen.getByText('Invalid email address')).toBeInTheDocument()
-        expect(container).toMatchSnapshot()
-    })
-})
+		expect(
+			container.querySelector(
+				'.awesomemotive-settings-form-input-error'
+			)
+		).toBeInTheDocument();
+		expect(
+			screen.getByText( 'Invalid email address' )
+		).toBeInTheDocument();
+		expect( container ).toMatchSnapshot();
+	} );
+} );

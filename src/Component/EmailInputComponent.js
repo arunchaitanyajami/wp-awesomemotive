@@ -53,7 +53,7 @@ export default ( { value, keyId, saveEmail, removeEmail } ) => {
 					value={ email }
 					type={ 'email' }
 					name={ 'email' }
-					id={sprintf( 'email_%d', keyId )}
+					id={ sprintf( 'email_%d', keyId ) }
 					required
 					placeholder={ 'Enter email address..' }
 					onChange={ ( nextValue ) =>

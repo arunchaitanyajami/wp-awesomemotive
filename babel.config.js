@@ -1,8 +1,8 @@
 module.exports = ( api ) => {
-    api.cache( true );
+	api.cache( true );
 
-    return {
-        presets: [ '@wordpress/babel-preset-default' ],
-        plugins: [ '@babel/plugin-proposal-class-properties' ],
-    };
+	return {
+		presets: [ '@wordpress/babel-preset-default' ],
+		plugins: [ '@babel/plugin-proposal-class-properties' ],
+	};
 };

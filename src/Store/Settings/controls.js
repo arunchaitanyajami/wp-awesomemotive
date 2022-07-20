@@ -1,5 +1,14 @@
 import deafultOptions from '../../deafultOptions';
 
+/**
+ * Fetch data from source endpoint and update store.
+ *
+ * @param ajaxActionName
+ * @param ajaxActionType
+ * @param data
+ * @returns {Promise<any>}
+ * @constructor
+ */
 export function FETCH_FROM_API( { ajaxActionName, ajaxActionType, data } ) {
 	const formData = new FormData();
 

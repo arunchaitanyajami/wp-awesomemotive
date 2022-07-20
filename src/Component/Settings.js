@@ -1,4 +1,7 @@
-import { __experimentalInputControl as InputControl, ToggleControl } from '@wordpress/components';
+import {
+	__experimentalInputControl as InputControl,
+	ToggleControl,
+} from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import * as defaultOptions from '../deafultOptions';
@@ -6,7 +9,7 @@ import { Icon, plus } from '@wordpress/icons';
 import EmailInputComponent from './EmailInputComponent';
 
 import { useSelect } from '@wordpress/data';
-import { STORE_NAME } from '../Store/Settings/constants'
+import { STORE_NAME } from '../Store/Settings/constants';
 
 export default ( {
 	settings,
@@ -14,10 +17,7 @@ export default ( {
 	updateRows,
 	updateDateReadable,
 } ) => {
-	const { getSettings } = useSelect(
-		( select ) => select( STORE_NAME ),
-		[]
-	);
+	const { getSettings } = useSelect( ( select ) => select( STORE_NAME ), [] );
 	const { data } = getSettings();
 	const [ value, setValue ] = useState( data.num_rows );
 	const [ date, setDate ] = useState( data.human_date );
@@ -101,7 +101,7 @@ export default ( {
 					label={ __( 'No of rows', defaultOptions.text_domain ) }
 					value={ value }
 					type={ 'number' }
-					id={'awesomemotive-settings-form-input-no-of-rows'}
+					id={ 'awesomemotive-settings-form-input-no-of-rows' }
 					onChange={ ( nextValue ) => setRows( nextValue ?? '' ) }
 				/>
 			</div>
@@ -123,7 +123,7 @@ export default ( {
 							  )
 					}
 					checked={ date }
-					id={'awesomemotive-settings-form-input-date'}
+					id={ 'awesomemotive-settings-form-input-date' }
 					onChange={ ( value ) => {
 						setDateReadable( value );
 					} }
@@ -146,7 +146,7 @@ export default ( {
 					} ) }
 					<div
 						className={ 'awesomemotive-settings-add-inputs' }
-						data-testid={'awesomemotive-settings-add-inputs'}
+						data-testid={ 'awesomemotive-settings-add-inputs' }
 						onClick={ setNewInput }
 					>
 						<Icon icon={ plus } />
