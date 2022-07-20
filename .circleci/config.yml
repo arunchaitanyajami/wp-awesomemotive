@@ -1,178 +1,177 @@
 version: 2.1
 
 job-references:
-  mysql_image: &mysql_image
-    circleci/mysql:5.6
+    mysql_image: &mysql_image circleci/mysql:5.6
 
-  setup_environment: &setup_environment
-    name: "Setup Environment Variables"
-    command: |
-      echo "export PATH=$HOME/.composer/vendor/bin:$PATH" >> $BASH_ENV
-      source /home/circleci/.bashrc
+    setup_environment: &setup_environment
+        name: 'Setup Environment Variables'
+        command: |
+            echo "export PATH=$HOME/.composer/vendor/bin:$PATH" >> $BASH_ENV
+            source /home/circleci/.bashrc
 
-  install_subversion: &install_subversion
-    name: "Install Subversion"
-    command: |
-      sudo apt-get update && sudo apt-get install subversion
+    install_subversion: &install_subversion
+        name: 'Install Subversion'
+        command: |
+            sudo apt-get update && sudo apt-get install subversion
 
-  install_dependencies: &install_dependencies
-    name: "Install Dependencies"
-    command: |
-      sudo apt-get update && sudo apt-get install subversion
-      sudo -E docker-php-ext-install mysqli
-      sudo sh -c "printf '\ndeb http://ftp.us.debian.org/debian sid main\n' >> /etc/apt/sources.list"
-      sudo apt-get update && sudo apt-get install mariadb-client
+    install_dependencies: &install_dependencies
+        name: 'Install Dependencies'
+        command: |
+            sudo apt-get update && sudo apt-get install subversion
+            sudo -E docker-php-ext-install mysqli
+            sudo sh -c "printf '\ndeb http://ftp.us.debian.org/debian sid main\n' >> /etc/apt/sources.list"
+            sudo apt-get update && sudo apt-get install mariadb-client
 
-  php_integration_test_job: &php_integration_test_job
-    parameters:
-      wp-version:
-        type: string
-        default: "latest"
-    environment:
-      - WP_TESTS_DIR: "/tmp/wordpress-tests-lib"
-      - WP_CORE_DIR: "/tmp/wordpress/"
-    steps:
-      - checkout
-      - run: *setup_environment
-      - run: *install_dependencies
-      - run:
-          name: "Run Tests"
-          command: |
-            composer install
-            bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1 << parameters.wp-version >>
-            composer run test:integration
-      - store_artifacts:
-          path: test-results/coverage-report
-      - store_test_results:
-          path: test-results
-  php_lint_steps: &php_lint_steps
-    steps:
-      - checkout
-      - run: *install_subversion
-      - run:
-          name: Install Composer
-          command: |
-            curl -s https://getcomposer.org/installer | php
-            mv composer.phar /usr/local/bin/composer
-      - run:
-          name: Composer Validate
-          command: composer validate
-      - run:
-          name: Install Composer dependencies
-          command: composer install
-      - run:
-          name: Lint PHP
-          command: composer run lint:phpcs
+    php_integration_test_job: &php_integration_test_job
+        parameters:
+            wp-version:
+                type: string
+                default: 'latest'
+        environment:
+            - WP_TESTS_DIR: '/tmp/wordpress-tests-lib'
+            - WP_CORE_DIR: '/tmp/wordpress/'
+        steps:
+            - checkout
+            - run: *setup_environment
+            - run: *install_dependencies
+            - run:
+                  name: 'Run Tests'
+                  command: |
+                      composer install
+                      bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1 << parameters.wp-version >>
+                      composer run test:integration
+            - store_artifacts:
+                  path: test-results/coverage-report
+            - store_test_results:
+                  path: test-results
+    php_lint_steps: &php_lint_steps
+        steps:
+            - checkout
+            - run: *install_subversion
+            - run:
+                  name: Install Composer
+                  command: |
+                      curl -s https://getcomposer.org/installer | php
+                      mv composer.phar /usr/local/bin/composer
+            - run:
+                  name: Composer Validate
+                  command: composer validate
+            - run:
+                  name: Install Composer dependencies
+                  command: composer install
+            - run:
+                  name: Lint PHP
+                  command: composer run lint:phpcs
 jobs:
-  lint:
-    docker:
-      - image: circleci/php:7.4
-    <<: *php_lint_steps
-  integration-test-php74-wordpress:
-    <<: *php_integration_test_job
-    docker:
-      - image: circleci/php:7.4
-      - image: *mysql_image
-  integration-test-php8-wordpress:
-    <<: *php_integration_test_job
-    docker:
-      - image: circleci/php:8
-      - image: *mysql_image
-  build:
-    docker:
-      - image: circleci/php:7.4.16-node-browsers
-    steps:
-      - checkout
-      - run:
-          name: Install Composer
-          command: |
-            curl -s https://getcomposer.org/installer | php
-            mv composer.phar /usr/local/bin/composer
-      - run:
-          name: Install production dependencies
-          command: composer install --no-dev -o
-      - persist_to_workspace:
-          root: .
-          paths:
-            - vendor
-  sync:
-    docker:
-      - image: cimg/base:2020.01
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - add_ssh_keys:
-          fingerprints:
-            - f6:a1:da:7b:11:90:42:bd:53:81:f7:ba:9a:7b:e2:b0
-      - deploy:
-          name: Deploy -built branch to github
-          command: bash <(curl -s "https://raw.githubusercontent.com/Automattic/vip-go-build/master/deploy.sh")
-  test-js:
-    docker:
-      - image: circleci/php:7.4.16-node-browsers
-    steps:
-      - checkout
-      - run:
-          name: Install Packages
-          command: npm install
-      - run:
-          name: Run Js Unit Test
-          command: npm run test:unit
-  lint-js:
-    docker:
-      - image: circleci/php:7.4.16-node-browsers
-    steps:
-      - checkout
-      - run:
-          name: Install Packages
-          command: npm install
-      - run:
-          name: Run Js Unit Test
-          command: npm run lint:js
+    lint:
+        docker:
+            - image: circleci/php:7.4
+        <<: *php_lint_steps
+    integration-test-php74-wordpress:
+        <<: *php_integration_test_job
+        docker:
+            - image: circleci/php:7.4
+            - image: *mysql_image
+    integration-test-php8-wordpress:
+        <<: *php_integration_test_job
+        docker:
+            - image: circleci/php:8
+            - image: *mysql_image
+    build:
+        docker:
+            - image: circleci/php:7.4.16-node-browsers
+        steps:
+            - checkout
+            - run:
+                  name: Install Composer
+                  command: |
+                      curl -s https://getcomposer.org/installer | php
+                      mv composer.phar /usr/local/bin/composer
+            - run:
+                  name: Install production dependencies
+                  command: composer install --no-dev -o
+            - persist_to_workspace:
+                  root: .
+                  paths:
+                      - vendor
+    sync:
+        docker:
+            - image: cimg/base:2020.01
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: .
+            - add_ssh_keys:
+                  fingerprints:
+                      - f6:a1:da:7b:11:90:42:bd:53:81:f7:ba:9a:7b:e2:b0
+            - deploy:
+                  name: Deploy -built branch to github
+                  command: bash <(curl -s "https://raw.githubusercontent.com/Automattic/vip-go-build/master/deploy.sh")
+    test-js:
+        docker:
+            - image: circleci/php:7.4.16-node-browsers
+        steps:
+            - checkout
+            - run:
+                  name: Install Packages
+                  command: npm install
+            - run:
+                  name: Run Js Unit Test
+                  command: npm run test:unit
+    lint-js:
+        docker:
+            - image: circleci/php:7.4.16-node-browsers
+        steps:
+            - checkout
+            - run:
+                  name: Install Packages
+                  command: npm install
+            - run:
+                  name: Run Js Unit Test
+                  command: npm run lint:js
 workflows:
-  version: 2
-  test_build_deploy:
-    jobs:
-      - lint:
-          filters:
-            branches:
-              ignore: /.*-built/
-      - test-js:
-          filters:
-            branches:
-              ignore: /.*-built/
-      - lint-js:
-          filters:
-            branches:
-              ignore: /.*-built/
-      - integration-test-php74-wordpress:
-          matrix:
-            parameters:
-              wp-version: [ "6.0","5.9" ]
-          filters:
-            branches:
-              ignore: /.*-built/
-      - integration-test-php8-wordpress:
-          matrix:
-            parameters:
-              wp-version: [ "6.0","5.9" ]
-          filters:
-            branches:
-              ignore: /.*-built/
-      - build:
-          requires:
-            - lint
-            - lint-js
-            - test-js
-            - integration-test-php74-wordpress
-            - integration-test-php8-wordpress
-          filters:
-            branches:
-              only: main
-      - sync:
-          requires:
-            - build
-          filters:
-            branches:
-              only: main
+    version: 2
+    test_build_deploy:
+        jobs:
+            - lint:
+                  filters:
+                      branches:
+                          ignore: /.*-built/
+            - test-js:
+                  filters:
+                      branches:
+                          ignore: /.*-built/
+            - lint-js:
+                  filters:
+                      branches:
+                          ignore: /.*-built/
+            - integration-test-php74-wordpress:
+                  matrix:
+                      parameters:
+                          wp-version: ['6.0', '5.9']
+                  filters:
+                      branches:
+                          ignore: /.*-built/
+            - integration-test-php8-wordpress:
+                  matrix:
+                      parameters:
+                          wp-version: ['6.0', '5.9']
+                  filters:
+                      branches:
+                          ignore: /.*-built/
+            - build:
+                  requires:
+                      - lint
+                      - lint-js
+                      - test-js
+                      - integration-test-php74-wordpress
+                      - integration-test-php8-wordpress
+                  filters:
+                      branches:
+                          only: main
+            - sync:
+                  requires:
+                      - build
+                  filters:
+                      branches:
+                          only: main
