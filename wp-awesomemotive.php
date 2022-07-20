@@ -8,7 +8,7 @@
  * @wordpress-plugin
  * Plugin Name:       AwesomeMotive Plugin
  * Description:       Plugin that retrieves data from a remote API, and makes an admin-only accessible Vue app with three tabs: one that displays a graph, one that displays a table  and one that has a settings form.
- * Version:           1.0.2
+ * Version:           1.0.4
  * Author:            Arun Chaitanya Jami
  * Author URI:        https://github.com/arunchaitanyajami
  * License:           GPL-2.0+
@@ -18,8 +18,6 @@
  */
 
 namespace AwesomeMotive;
-
-use AwesomeMotive\Admin\Page;
 
 /**
  * If this file is called directly, abort.
@@ -33,7 +31,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'AWESOMEMOTIVE_WP_PLUGIN_VERSION', '1.0.2' );
+define( 'AWESOMEMOTIVE_WP_PLUGIN_VERSION', '1.0.4' );
 define( 'AWESOMEMOTIVE_PREFIX', 'wpam_' );
 define( 'AWESOMEMOTIVE_SITE_OPTION', 'test_project_option' );
 define( 'AWESOMEMOTIVE_DIR_PATH', plugin_dir_path( __FILE__ ) );
@@ -80,6 +78,9 @@ if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
 	include __DIR__ . '/vendor/autoload.php';
 }
 
+use AwesomeMotive\Admin\AjaxEndpoint;
+use AwesomeMotive\Admin\Page;
+
 /**
  * Initialize cron job.
  */
@@ -89,6 +90,13 @@ if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
  * Create admin menu page.
  */
 ( new Page() )->init();
+
+/**
+ * Load Ajax Endpoints.
+ */
+( new AjaxEndpoint() )->init( 'all_data', 'AwesomeMotive\all_data_endpoint_ajax_callback' );
+( new AjaxEndpoint() )->init( 'data_endpoint', 'AwesomeMotive\data_endpoint_ajax_callback' );
+( new AjaxEndpoint() )->init( 'all_settings_endpoint', 'AwesomeMotive\get_all_settings_ajax_callback' );
 
 /**
  * Loads and defines the internationalization files for this plugin so that it is ready for translation.

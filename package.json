@@ -1,6 +1,6 @@
 {
 	"name": "wp-awesomemotive-plugin",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "Plugin that retrieves data from a remote API, and makes an admin-only accessible ReatJs app with three tabs: one that displays a graph, one that displays a table  and one that has a settings form.",
 	"main": "src/index.js",
 	"directories": {
@@ -33,9 +33,15 @@
 	},
 	"homepage": "https://github.com/arunchaitanyajami/wp-awesomemotive#readme",
 	"devDependencies": {
+		"@testing-library/dom": "^8.16.0",
 		"@testing-library/jest-dom": "^5.16.4",
 		"@testing-library/react": "^12.1.5",
+		"@wordpress/api-fetch": "^6.10.0",
+		"@wordpress/components": "^19.15.0",
+		"@wordpress/compose": "^5.11.0",
 		"@wordpress/element": "^4.11.0",
+		"@wordpress/i18n": "^4.13.0",
+		"@wordpress/icons": "^9.4.0",
 		"@wordpress/scripts": "^23.5.0",
 		"babel-eslint": "^10.1.0",
 		"eslint": "^6.5.1",
@@ -49,6 +55,7 @@
 		"qs": "^6.9.4"
 	},
 	"dependencies": {
+		"@wordpress/data": "^6.13.0",
 		"query-string": "^7.1.1",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",

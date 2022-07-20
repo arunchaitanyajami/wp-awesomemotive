@@ -2,11 +2,22 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { useState } from '@wordpress/element';
 import * as qs from 'query-string';
+import Settings from './Container/Settings';
+import Graph from './Component/Graph';
+import Table from './Component/Table';
 
 export default () => {
 	const { getTabIndex } = qs.parse( location.search );
-	const [ tabIndex, setTabIndex ] = useState( getTabIndex ? getTabIndex : 0 );
+	const [ tabIndex, setTabIndex ] = useState(
+		getTabIndex ? parseInt( getTabIndex ) : 0
+	);
+	const [ isError, setIsEroor ] = useState( false );
+	const [ message, setMessage ] = useState( '' );
 
+	/**
+	 * Set tab index, this will help preserve the current tab state when page is reloaded.
+	 * @param index
+	 */
 	const changeTabIndex = ( index ) => {
 		setTabIndex( index );
 
@@ -20,19 +31,42 @@ export default () => {
 		window.history.pushState( { path: newUrl }, '', newUrl );
 	};
 
+	/**
+	 * Provide error notice.
+	 *
+	 * @returns {JSX.Element}
+	 * @constructor
+	 */
+	const ErrorNotice = () => (
+		<div className={ 'components-notice is-error' }>
+			<p>
+				An error occurred: <code>{ message }</code>.
+			</p>
+		</div>
+	);
+
 	return (
-		<Tabs
-			defaultIndex={ tabIndex }
-			onSelect={ ( index ) => changeTabIndex( index ) }
-		>
-			<TabList>
-				<Tab>Settings</Tab>
-				<Tab>Table</Tab>
-				<Tab>Graph</Tab>
-			</TabList>
-			<TabPanel>Content 1</TabPanel>
-			<TabPanel>Content 2</TabPanel>
-			<TabPanel>Content 3</TabPanel>
-		</Tabs>
+		<div className={ 'awesomemotive-container' }>
+			{ isError && <ErrorNotice /> }
+			<Tabs
+				defaultIndex={ tabIndex }
+				onSelect={ ( index ) => changeTabIndex( index ) }
+			>
+				<TabList>
+					<Tab>Settings</Tab>
+					<Tab>Table</Tab>
+					<Tab>Graph</Tab>
+				</TabList>
+				<TabPanel>
+					<Settings />
+				</TabPanel>
+				<TabPanel>
+					<Table />
+				</TabPanel>
+				<TabPanel>
+					<Graph />
+				</TabPanel>
+			</Tabs>
+		</div>
 	);
 };
