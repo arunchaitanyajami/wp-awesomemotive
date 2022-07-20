@@ -1,6 +1,6 @@
 {
 	"name": "wp-awesomemotive-plugin",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "Plugin that retrieves data from a remote API, and makes an admin-only accessible ReatJs app with three tabs: one that displays a graph, one that displays a table  and one that has a settings form.",
 	"main": "src/index.js",
 	"directories": {
