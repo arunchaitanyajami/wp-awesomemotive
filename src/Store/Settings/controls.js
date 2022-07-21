@@ -9,7 +9,7 @@ import deafultOptions from '../../deafultOptions';
  * @returns {Promise<any>}
  * @constructor
  */
-export function FETCH_FROM_API( { ajaxActionName, ajaxActionType, data } ) {
+export async function FETCH_FROM_API( { ajaxActionName, ajaxActionType, data } ) {
 	const formData = new FormData();
 
 	formData.append( 'action', ajaxActionName );
