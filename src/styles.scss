@@ -1,23 +1,43 @@
 .awesomemotive-container {
 
 	.components-notice {
-		padding: 10px;
 		margin-top: 10px;
 		margin-bottom: 10px;
+		width: 100%;
+		overflow: hidden;
+		display: flex;
+		box-sizing: border-box;
 
 		&.is-error {
 			background-color: rgba(255, 0, 0, 0.52);
-			color: #f00;
-			padding: 10px;
+			color: #ffffff;
+		}
+
+		&.is-success {
+			background-color: rgba(83, 147, 83, 0.55);
+			color: #ffffff;
 		}
 
 		p {
 			margin: 8px;
 		}
 
-		.components-notice__content {
-			width: 90%;
+		.components-notice-message{
+			padding-top: 10px;
+			padding-bottom: 10px;
+			box-sizing: border-box;
+			width: calc(100% - 32px);
 			float: left;
+			margin: 0 16px;
+		}
+
+		.components-notice-button{
+			width: 10%;
+			padding-top: 10px;
+
+			svg{
+				background-color: #ffffff;
+			}
 		}
 	}
 

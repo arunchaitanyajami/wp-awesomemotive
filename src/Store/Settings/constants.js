@@ -7,4 +7,6 @@ export const DEFAULT_STATE = {
 	},
 	status: 200,
 	message: 'Data Obtained successfully',
+	isInitialLoad: false,
+	isDataUpdated: false,
 };

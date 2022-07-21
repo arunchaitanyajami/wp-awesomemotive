@@ -8,18 +8,17 @@ import { FETCH_FROM_API } from './controls';
  * @returns {Generator<Promise<*>, {type: string, value, key}, *>}
  */
 export function* updateOption( key, value ) {
-	yield FETCH_FROM_API( {
-		ajaxActionName: 'all_settings_endpoint',
-		ajaxActionType: 'update',
-		data: JSON.stringify( {
-			[ key ]: value,
-		} ),
-	} );
+	const settings =  yield fetchFromAPI( 'all_settings_endpoint', 'update', JSON.stringify( {
+		[ key ]: value,
+	} ) );
+
+	settings.isDataUpdated = true;
 
 	return {
 		type: 'UPDATE_SETTINGS',
 		key,
 		value,
+		settings
 	};
 }
 
@@ -50,18 +49,34 @@ export function setOptions( settings ) {
 	};
 }
 
+export function updateDataLoadFlag( isInitialLoad ){
+	return {
+		type: 'SET_DATA_LOAD_FLAG',
+		isInitialLoad
+	};
+}
+
+export function updateDataUpdatedFlag( isDataUpdated  ){
+	return {
+		type: 'SET_DATA_UPDATE_FLAG',
+		isDataUpdated
+	};
+}
+
 /**
  * Fetch data from source endpoint and update store.
  *
  * @param ajaxActionName
  * @param ajaxActionType
+ * @param data
  * @returns {{ajaxActionType, type: string, ajaxActionName}}
  */
-export function fetchFromAPI( ajaxActionName, ajaxActionType ) {
+export function* fetchFromAPI( ajaxActionName, ajaxActionType, data = '' ) {
 	return {
 		type: 'FETCH_FROM_API',
 		ajaxActionName,
 		ajaxActionType,
+		data
 	};
 }
 
