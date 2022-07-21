@@ -92,13 +92,18 @@ class AjaxEndpoint {
 		/**
 		 * Data that returns from call back can be anything but wp_json_encode 1st perimeter is of type mixed.
 		 */
-		echo wp_json_encode(
-			array(
-				'status'  => 200,
-				'message' => 'Data fetched successfully',
-				'data'    => call_user_func( $callback, $type, $data ?: array() ), //@phpcs:ignore
-			)
-		);
+		$response = call_user_func( $callback, $type, $data ?: array() ); //@phpcs:ignore
+		if ( empty( $response ) ) {
+			echo wp_json_encode(
+				array(
+					'status'  => 404,
+					'message' => 'Unable to Process data',
+				)
+			);
+			wp_die();
+		}
+
+		echo wp_json_encode( $response );
 
 		// Always die in functions echoing ajax content.
 		wp_die();

@@ -5,11 +5,13 @@ import Settings from '../Settings';
 
 let props = {
 	setValue: jest.fn(),
-	human_date: false,
-	num_rows: 5,
-	emails: [ 'test@test.com' ],
 	setDate: jest.fn(),
 	setEmails: jest.fn(),
+	data: {
+		emails: [ 'test@test.com' ],
+		num_rows: 5,
+		human_date: false,
+	}
 };
 
 jest.mock( '@wordpress/data', () => ( {
@@ -48,10 +50,10 @@ describe( 'Settings Component', () => {
 		mockUseEffect();
 		mockUseEffect();
 		useState
-			.mockReturnValueOnce( [ props.num_rows, jest.fn() ] )
-			.mockReturnValueOnce( [ props.human_date, jest.fn() ] )
-			.mockReturnValueOnce( [ props.emails, jest.fn() ] );
-		const { container } = render( <Settings /> );
+			.mockReturnValueOnce( [ props.data.num_rows, jest.fn() ] )
+			.mockReturnValueOnce( [ props.data.human_date, jest.fn() ] )
+			.mockReturnValueOnce( [ props.data.emails, jest.fn() ] );
+		const { container } = render( <Settings settings={props} /> );
 
 		expect(
 			parseInt(
@@ -61,7 +63,7 @@ describe( 'Settings Component', () => {
 			)
 		).toBe( 5 );
 		expect( container.querySelector( '#email_1' ).value ).toBe(
-			props.emails[ 0 ]
+			props.data.emails[ 0 ]
 		);
 		expect(
 			container.querySelector( '.components-form-toggle__input' )
@@ -70,7 +72,7 @@ describe( 'Settings Component', () => {
 	} );
 
 	it( 'Should add multiple emails and check if node exists', async () => {
-		props.emails = props.emails.concat( [
+		props.data.emails = props.data.emails.concat( [
 			'test2@test.com',
 			'test3@test.com',
 			'test4@test.com',
@@ -79,16 +81,16 @@ describe( 'Settings Component', () => {
 		mockUseEffect();
 		mockUseEffect();
 		useState
-			.mockReturnValueOnce( [ props.num_rows, jest.fn() ] )
-			.mockReturnValueOnce( [ props.human_date, jest.fn() ] )
-			.mockReturnValueOnce( [ props.emails, jest.fn() ] );
-		const { container } = render( <Settings /> );
+			.mockReturnValueOnce( [ props.data.num_rows, jest.fn() ] )
+			.mockReturnValueOnce( [ props.data.human_date, jest.fn() ] )
+			.mockReturnValueOnce( [ props.data.emails, jest.fn() ] );
+		const { container } = render( <Settings settings={props} /> );
 
 		expect( container.querySelector( '#email_1' ).value ).toBe(
-			props.emails[ 0 ]
+			props.data.emails[ 0 ]
 		);
 		expect( container.querySelector( '#email_3' ).value ).toBe(
-			props.emails[ 2 ]
+			props.data.emails[ 2 ]
 		);
 
 		expect( container ).toMatchSnapshot();

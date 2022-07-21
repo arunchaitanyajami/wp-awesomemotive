@@ -11,8 +11,6 @@ export default () => {
 	const [ tabIndex, setTabIndex ] = useState(
 		getTabIndex ? parseInt( getTabIndex ) : 0
 	);
-	const [ isError, setIsEroor ] = useState( false );
-	const [ message, setMessage ] = useState( '' );
 
 	/**
 	 * Set tab index, this will help preserve the current tab state when page is reloaded.
@@ -31,23 +29,8 @@ export default () => {
 		window.history.pushState( { path: newUrl }, '', newUrl );
 	};
 
-	/**
-	 * Provide error notice.
-	 *
-	 * @returns {JSX.Element}
-	 * @constructor
-	 */
-	const ErrorNotice = () => (
-		<div className={ 'components-notice is-error' }>
-			<p>
-				An error occurred: <code>{ message }</code>.
-			</p>
-		</div>
-	);
-
 	return (
 		<div className={ 'awesomemotive-container' }>
-			{ isError && <ErrorNotice /> }
 			<Tabs
 				defaultIndex={ tabIndex }
 				onSelect={ ( index ) => changeTabIndex( index ) }
