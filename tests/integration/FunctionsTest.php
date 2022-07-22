@@ -59,7 +59,7 @@ class FunctionsTest extends WP_UnitTestCase {
 		$this->assertArrayHasKey( 'status', $settings );
 		$this->assertArrayHasKey( 'message', $settings );
 		$this->assertEquals( 400, $settings['status'] );
-		$this->assertEquals( 'Bad Request', $settings['message'] );
+		$this->assertEquals( 'Unable to Update the data.', $settings['message'] );
 	}
 
 	/**
@@ -82,8 +82,8 @@ class FunctionsTest extends WP_UnitTestCase {
 		$settings = get_all_settings_ajax_callback( 'update', array( 'emails' => array() ) );
 		$this->assertArrayHasKey( 'status', $settings );
 		$this->assertArrayHasKey( 'message', $settings );
-		$this->assertEquals( 403, $settings['status'] );
-		$this->assertEquals( 'Unable to Process request, empty data provided', $settings['message'] );
+		$this->assertEquals( 400, $settings['status'] );
+		$this->assertEquals( 'Bad Request', $settings['message'] );
 	}
 
 	/**
