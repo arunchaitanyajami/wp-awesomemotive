@@ -41,7 +41,14 @@ function get_all_settings_ajax_callback( string $type = 'get', array $data = arr
 		);
 	}
 
-	if ( empty( array_filter( $data ) ) ) {
+	$filter_data = array_filter(
+		$data,
+		function( $v ) {
+			return ! is_null( $v );
+		} 
+	);
+
+	if ( empty( $filter_data ) ) {
 		return array(
 			'status'  => 403,
 			'message' => 'Unable to Process request, empty data provided',
@@ -57,11 +64,13 @@ function get_all_settings_ajax_callback( string $type = 'get', array $data = arr
 	$is_data_valid = true;
 	foreach ( $data as $key => $value ) {
 		if ( ! in_array( $key, $allowed_keys, true ) ) {
-			continue;
+			$is_data_valid = false;
+			break;
 		}
 
 		if ( 'num_rows' === $key ) {
 			$filtered_value = filter_var( $value, FILTER_SANITIZE_NUMBER_INT );
+			$filtered_value = empty( $filtered_value ) ? 5 : $filtered_value;
 		}
 
 		if ( 'human_date' === $key ) {
@@ -73,7 +82,7 @@ function get_all_settings_ajax_callback( string $type = 'get', array $data = arr
 			$filtered_value = validate_emails_in_array( $filtered_value );
 		}
 
-		if ( ! empty( $value ) && empty( $filtered_value ) && 'human_date' !== $key ) {
+		if ( empty( $filtered_value ) && 'human_date' !== $key ) {
 			$is_data_valid = false;
 			break;
 		}
@@ -131,7 +140,7 @@ function validate_emails_in_array( array $emails = array() ): array {
  */
 function all_data_endpoint_ajax_callback() {
 	$all_data           = data_endpoint_ajax_callback();
-	$all_data->settings = get_all_settings_ajax_callback();
+	$all_data->settings = get_option( AWESOMEMOTIVE_SITE_OPTION, array() );
 
 	return $all_data;
 }
