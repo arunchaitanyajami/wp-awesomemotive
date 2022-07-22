@@ -59,7 +59,7 @@ class FunctionsTest extends WP_UnitTestCase {
 		$this->assertArrayHasKey( 'status', $settings );
 		$this->assertArrayHasKey( 'message', $settings );
 		$this->assertEquals( 400, $settings['status'] );
-		$this->assertEquals( 'Bad Request', $settings['message'] );
+		$this->assertEquals( 'Unable to Update the data.', $settings['message'] );
 	}
 
 	/**
