@@ -12,8 +12,21 @@ import deafultOptions from '../../deafultOptions';
 export async function FETCH_FROM_API( { ajaxActionName, ajaxActionType, data } ) {
 	const formData = new FormData();
 
-	formData.append( 'action', ajaxActionName );
-	formData.append( 'type', ajaxActionType );
+	/**
+	 * WP AJAX Action.
+	 */
+	formData.append('action', ajaxActionName)
+
+	/**
+	 * Get || Update.
+	 */
+	if (ajaxActionType) {
+		formData.append('type', ajaxActionType)
+	}
+
+	/**
+	 * Wp nonce value
+	 */
 	formData.append( 'wpam_nonce', deafultOptions.wp_nonce );
 	if ( data ) {
 		formData.append( 'data', data );

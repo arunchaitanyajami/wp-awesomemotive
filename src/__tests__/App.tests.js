@@ -11,6 +11,13 @@ jest.mock( '../Container/Settings', () =>
 		return 'Settings';
 	} )
 );
+
+jest.mock( '../Container/Table', () =>
+	jest.fn( () => {
+		return 'Table';
+	} )
+);
+
 jest.mock( '@wordpress/data', () => ( {
 	registerStore: jest.fn(),
 	combineReducers: jest.fn(),
