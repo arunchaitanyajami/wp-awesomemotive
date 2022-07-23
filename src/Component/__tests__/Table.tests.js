@@ -81,8 +81,6 @@ describe( 'Table Component', () => {
 
     expect( parseInt( container.querySelector('table > tbody > tr > td').innerHTML ) ).toEqual(1)
     expect( container.querySelectorAll('table >  tbody > tr').length ).toEqual(2)
-
-    expect( container ).toMatchSnapshot()
   })
 
 })
