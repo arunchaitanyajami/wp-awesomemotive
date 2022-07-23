@@ -90,10 +90,17 @@ jobs:
             - run:
                   name: Install production dependencies
                   command: composer install --no-dev -o
+            - run:
+                name: Install NPM Packages
+                command: npm install
+            - run:
+                name: Create Assets Build
+                command: npm run build
             - persist_to_workspace:
-                  root: .
-                  paths:
-                      - vendor
+                root: .
+                paths:
+                    - vendor
+                    - build
     sync:
         docker:
             - image: cimg/base:2020.01
