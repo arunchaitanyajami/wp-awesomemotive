@@ -93,9 +93,9 @@ jobs:
             - run:
                 name: Install NPM Packages
                 command: npm install
-                  - run:
-                      name: Create Assets Build
-                      command: npm run build
+            - run:
+                name: Create Assets Build
+                command: npm run build
             - persist_to_workspace:
                   root: .
                   paths:
