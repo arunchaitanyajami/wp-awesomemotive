@@ -15,6 +15,7 @@ Please describe any relevant performance impact of this change. This can be posi
 ## How Has This Been Tested?
 
 Please describe the tests that you ran to verify your changes.
+- [ ] Automation
 - [ ] Php Unit
 - [ ] Js Unit
 
