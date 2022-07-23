@@ -223,7 +223,7 @@
 	}
 
 	.react-tabs {
-		&&__tab-list {
+		&__tab-list {
 			background: white;
 
 			li {
@@ -233,7 +233,7 @@
 			}
 		}
 
-		&&__tab--selected {
+		&__tab--selected {
 			border: 0 !important;
 			border-bottom: 5px solid #2271b1 !important;
 		}
