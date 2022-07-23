@@ -14,7 +14,7 @@ export default ( {
 	updateRows,
 	updateDateReadable,
 	updateDataLoadFlag,
-	updateDataUpdatedFlag
+	updateDataUpdatedFlag,
 } ) => {
 	const { data } = settings;
 	const [ value, setValue ] = useState( data.num_rows );
@@ -32,7 +32,7 @@ export default ( {
 	const setRows = ( value ) => {
 		setValue( value );
 		updateRows( value );
-		setReloadComponent(false)
+		setReloadComponent( false );
 	};
 
 	/**
@@ -43,7 +43,7 @@ export default ( {
 	const setDateReadable = ( booleanValue ) => {
 		setDate( booleanValue );
 		updateDateReadable( booleanValue );
-		setReloadComponent(false)
+		setReloadComponent( false );
 	};
 
 	/**
@@ -79,7 +79,7 @@ export default ( {
 			...appendEmail,
 		} );
 
-		setReloadComponent(false)
+		setReloadComponent( false );
 	};
 
 	/**
@@ -91,43 +91,49 @@ export default ( {
 		delete emails[ key ];
 		setEmails( { ...emails } );
 		updateEmails( { ...emails } );
-		setReloadComponent(false)
+		setReloadComponent( false );
 	};
 
 	const updatedFlags = () => {
-		setIsError(false);
-		setMessage('')
-		updateDataLoadFlag(false);
-		updateDataUpdatedFlag(false);
-	}
+		setIsError( false );
+		setMessage( '' );
+		updateDataLoadFlag( false );
+		updateDataUpdatedFlag( false );
+	};
 
 	/**
 	 * Updated flags on closing notice.
 	 */
 	const onCloseNotice = () => {
-		setIsError(false);
-		setMessage('')
-		updateDataLoadFlag(false);
-		updateDataUpdatedFlag(false);
-	}
+		setIsError( false );
+		setMessage( '' );
+		updateDataLoadFlag( false );
+		updateDataUpdatedFlag( false );
+	};
 
-	useEffect(() => {
-		if (reloadComponent) {
-			setEmails(data.emails);
-			setValue(data.num_rows);
-			setDate(data.human_date ?? false);
+	useEffect( () => {
+		if ( reloadComponent ) {
+			setEmails( data.emails );
+			setValue( data.num_rows );
+			setDate( data.human_date ?? false );
 		}
 
-		if ((settings.isDataUpdated || settings.isInitialLoad) && 200 !== settings.status) {
-			setIsError(true);
-			setMessage(settings.message);
+		if (
+			( settings.isDataUpdated || settings.isInitialLoad ) &&
+			200 !== settings.status
+		) {
+			setIsError( true );
+			setMessage( settings.message );
 		}
 
-		if ((settings.isDataUpdated || settings.isInitialLoad) && 200 === settings.status) {
-			setIsError(false);
-			setMessage(settings.message);
+		if (
+			( settings.isDataUpdated || settings.isInitialLoad ) &&
+			200 === settings.status
+		) {
+			setIsError( false );
+			setMessage( settings.message );
 		}
-	}, [data]);
+	}, [ data ] );
 
 	/**
 	 * Provide error notice.
@@ -135,22 +141,34 @@ export default ( {
 	 * @returns {JSX.Element}
 	 * @constructor
 	 */
-	const ErrorNotice = ({type}) => (
-		<div className={'components-notice is-' + type}>
-			<div className={'components-notice-message'}>
-				{'error' === type && <p> An error occurred: <code>{message}</code>.</p>}
-				{'success' === type && <p>{message}</p>}
+	const ErrorNotice = ( { type } ) => (
+		<div className={ 'components-notice is-' + type }>
+			<div className={ 'components-notice-message' }>
+				{ 'error' === type && (
+					<p>
+						{ ' ' }
+						An error occurred: <code>{ message }</code>.
+					</p>
+				) }
+				{ 'success' === type && <p>{ message }</p> }
 			</div>
-			<div className={'components-notice-button'} onClick={ () => { onCloseNotice() }} >
-				<p><Icon icon={close}/></p>
+			<div
+				className={ 'components-notice-button' }
+				onClick={ () => {
+					onCloseNotice();
+				} }
+			>
+				<p>
+					<Icon icon={ close } />
+				</p>
 			</div>
 		</div>
 	);
 
 	return (
-		<div className={'awesomemotive-settings-container-fluid'}>
-			{ isError && message && <ErrorNotice type={'error'} /> }
-			{ !isError && message && <ErrorNotice type={'success'} /> }
+		<div className={ 'awesomemotive-settings-container-fluid' }>
+			{ isError && message && <ErrorNotice type={ 'error' } /> }
+			{ ! isError && message && <ErrorNotice type={ 'success' } /> }
 			<div className={ 'awesomemotive-settings-container' }>
 				<div className={ 'awesomemotive-settings-form-inputs' }>
 					<InputControl
@@ -187,7 +205,9 @@ export default ( {
 				</div>
 				<div className={ 'awesomemotive-settings-form-inputs' }>
 					<h2>{ __( 'Email List:', defaultOptions.text_domain ) }</h2>
-					<div className={ 'awesomemotive-settings-form-input-inner' }>
+					<div
+						className={ 'awesomemotive-settings-form-input-inner' }
+					>
 						{ Object.keys( emails ).map( ( value, c ) => {
 							return (
 								<EmailInputComponent

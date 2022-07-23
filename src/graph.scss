@@ -1,0 +1,116 @@
+.graph {
+	display: block;
+	width: 600px;
+	height: 100%;
+	margin: 0 auto;
+
+	caption {
+		display: block;
+		font: bold 150%/120% arial, helvetica, sans-serif;
+		padding-bottom: 0.33em;
+	}
+
+	tr {
+		position: relative;
+		display: block;
+
+		&:hover {
+			z-index: 999;
+
+			td {
+				opacity: 0.7;
+
+				span {
+					width: 4em;
+					margin-left: -2em; /* 1/2 the declared width */
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+	tr, td {
+		display: block;
+		text-align: center;
+	}
+
+	td {
+		width: 100%;
+		height: 100%;
+		background: #2271b1;
+		border-radius: 0.5em 0.5em 0 0;
+		transition: background 0.5s;
+
+		span {
+			overflow: hidden;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			width: 0;
+			padding: 0.5em 0;
+			margin: -1em 0 0;
+			font: normal 85%/120% arial, helvetica, sans-serif;
+			font-weight: bold;
+			opacity: 0;
+			transition: opacity 0.5s;
+			color: white;
+		}
+	}
+
+	tbody {
+		position: relative;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(2em, 1fr));
+		column-gap: 2.5%;
+		align-items: end;
+		height: 400px;
+		margin: 3em 0 1em 2.8em;
+		padding: 0 1em;
+		border-bottom: 2px solid rgb(0 0 0 / 50%);
+		border-left: 2px solid rgb(0 0 0 / 50%);
+		background: repeating-linear-gradient(
+			180deg,
+			rgb(170 170 170 / 70%) 0,
+			rgb(170 170 170 / 70%) 1px,
+			transparent 1px,
+			transparent 20%
+		);
+
+		&:before {
+			position: absolute;
+			left: -3.2em;
+			width: 2.8em;
+			text-align: right;
+			font: bold 80%/120% arial, helvetica, sans-serif;
+			content: "50K";
+			top: -0.6em;
+		}
+
+		&:after {
+			position: absolute;
+			left: -3.2em;
+			width: 2.8em;
+			text-align: right;
+			font: bold 80%/120% arial, helvetica, sans-serif;
+			content: "0";
+			bottom: -0.6em;
+		}
+
+		th {
+			position: absolute;
+			top: -5em;
+			left: 0;
+			width: 100%;
+			font-weight: normal;
+			text-align: center;
+			white-space: nowrap;
+			text-indent: 0;
+			transform: rotate(-45deg);
+			font-size: 10px;
+
+			&:after {
+				content: "";
+			}
+		}
+	}
+}

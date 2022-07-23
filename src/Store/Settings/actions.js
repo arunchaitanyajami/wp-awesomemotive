@@ -8,9 +8,13 @@ import { FETCH_FROM_API } from './controls';
  * @returns {Generator<Promise<*>, {type: string, value, key}, *>}
  */
 export function* updateOption( key, value ) {
-	const settings =  yield fetchFromAPI( 'all_settings_endpoint', 'update', JSON.stringify( {
-		[ key ]: value,
-	} ) );
+	const settings = yield fetchFromAPI(
+		'all_settings_endpoint',
+		'update',
+		JSON.stringify( {
+			[ key ]: value,
+		} )
+	);
 
 	settings.isDataUpdated = true;
 
@@ -18,7 +22,7 @@ export function* updateOption( key, value ) {
 		type: 'UPDATE_SETTINGS',
 		key,
 		value,
-		settings
+		settings,
 	};
 }
 
@@ -49,17 +53,17 @@ export function setOptions( settings ) {
 	};
 }
 
-export function updateDataLoadFlag( isInitialLoad ){
+export function updateDataLoadFlag( isInitialLoad ) {
 	return {
 		type: 'SET_DATA_LOAD_FLAG',
-		isInitialLoad
+		isInitialLoad,
 	};
 }
 
-export function updateDataUpdatedFlag( isDataUpdated  ){
+export function updateDataUpdatedFlag( isDataUpdated ) {
 	return {
 		type: 'SET_DATA_UPDATE_FLAG',
-		isDataUpdated
+		isDataUpdated,
 	};
 }
 
@@ -76,7 +80,7 @@ export function* fetchFromAPI( ajaxActionName, ajaxActionType, data = '' ) {
 		type: 'FETCH_FROM_API',
 		ajaxActionName,
 		ajaxActionType,
-		data
+		data,
 	};
 }
 

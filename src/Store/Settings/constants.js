@@ -5,7 +5,7 @@ export const DEFAULT_STATE = {
 		num_rows: 5,
 		human_date: false,
 		emails: {},
-		...WpamEditorSettings.settings
+		...WpamEditorSettings.settings,
 	},
 	status: 200,
 	message: 'Data Obtained successfully',
