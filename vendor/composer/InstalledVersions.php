@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '12854f6d2e9bcb7c80573079465282b9ac0b817b',
+    'reference' => '95af4cc504006e9d7dfd7fca3f87a4efb4a6d4da',
     'name' => 'awesomemotive/wp-plugin',
   ),
   'versions' => 
@@ -42,7 +42,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '12854f6d2e9bcb7c80573079465282b9ac0b817b',
+      'reference' => '95af4cc504006e9d7dfd7fca3f87a4efb4a6d4da',
     ),
   ),
 );
