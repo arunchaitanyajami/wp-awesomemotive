@@ -1,0 +1,15 @@
+.gitignore
+phpcs.xml*
+phpunit.xml*
+bin
+node_modules
+package*
+src
+.editorconfig
+docker
+docker-compose.yml
+composer.lock
+.stylelintrc
+local
+PULL_REQUEST_TEMPLATE
+.env
