@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '12d3fd6db5e352aa77debee47b9ca8f910d623c2',
+    'reference' => '12854f6d2e9bcb7c80573079465282b9ac0b817b',
     'name' => 'awesomemotive/wp-plugin',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '12d3fd6db5e352aa77debee47b9ca8f910d623c2',
+      'reference' => '12854f6d2e9bcb7c80573079465282b9ac0b817b',
     ),
   ),
 );
