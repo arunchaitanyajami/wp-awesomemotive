@@ -97,10 +97,10 @@ jobs:
                 name: Create Assets Build
                 command: npm run build
             - persist_to_workspace:
-                  root: .
-                  paths:
-                      - vendor
-                      - build
+                root: .
+                paths:
+                    - vendor
+                    - build
     sync:
         docker:
             - image: cimg/base:2020.01
