@@ -15,25 +15,25 @@ export default ( state = DEFAULT_STATE, action ) => {
 				data: {
 					...state.data,
 					...{
-						[action.key]: action.value,
+						[ action.key ]: action.value,
 					},
 				},
-				...action.settings
+				...action.settings,
 			};
 		case 'SET_DATA_LOAD_FLAG':
 			return {
 				...state,
 				...{
-					isInitialLoad: action.isInitialLoad
-				}
-			}
+					isInitialLoad: action.isInitialLoad,
+				},
+			};
 		case 'SET_DATA_UPDATE_FLAG':
 			return {
 				...state,
 				...{
-					isDataUpdated: action.isDataUpdated
-				}
-			}
+					isDataUpdated: action.isDataUpdated,
+				},
+			};
 	}
 
 	return state;
