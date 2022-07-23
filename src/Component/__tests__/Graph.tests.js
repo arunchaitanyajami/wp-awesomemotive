@@ -43,8 +43,6 @@ describe( 'Graph Component', () => {
 
     expect( container.querySelector('table > caption').innerHTML ).toEqual(props.tableData.table.title)
     expect( container.querySelectorAll('table >  tbody > tr').length ).toEqual(7)
-
-    expect( container ).toMatchSnapshot()
   })
 
 })
