@@ -13,3 +13,4 @@ composer.lock
 local
 PULL_REQUEST_TEMPLATE
 .env
+.idea
