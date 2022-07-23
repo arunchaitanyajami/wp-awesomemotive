@@ -9,19 +9,23 @@ import deafultOptions from '../../deafultOptions';
  * @returns {Promise<any>}
  * @constructor
  */
-export async function FETCH_FROM_API( { ajaxActionName, ajaxActionType, data } ) {
+export async function FETCH_FROM_API( {
+	ajaxActionName,
+	ajaxActionType,
+	data,
+} ) {
 	const formData = new FormData();
 
 	/**
 	 * WP AJAX Action.
 	 */
-	formData.append('action', ajaxActionName)
+	formData.append( 'action', ajaxActionName );
 
 	/**
 	 * Get || Update.
 	 */
-	if (ajaxActionType) {
-		formData.append('type', ajaxActionType)
+	if ( ajaxActionType ) {
+		formData.append( 'type', ajaxActionType );
 	}
 
 	/**

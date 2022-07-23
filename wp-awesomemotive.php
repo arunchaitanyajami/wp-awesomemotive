@@ -94,8 +94,8 @@ use AwesomeMotive\Admin\Page;
 /**
  * Load Ajax Endpoints.
  */
-( new AjaxEndpoint() )->init( 'all_data', 'AwesomeMotive\all_data_endpoint_ajax_callback' );
-( new AjaxEndpoint() )->init( 'data_endpoint', 'AwesomeMotive\data_endpoint_ajax_callback' );
+( new AjaxEndpoint() )->init( 'all_data_endpoint', 'AwesomeMotive\all_data_endpoint_ajax_callback' );
+( new AjaxEndpoint() )->init( 'fetch_data_endpoint', 'AwesomeMotive\data_endpoint_ajax_callback' );
 ( new AjaxEndpoint() )->init( 'all_settings_endpoint', 'AwesomeMotive\get_all_settings_ajax_callback' );
 
 /**

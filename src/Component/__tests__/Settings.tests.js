@@ -11,7 +11,7 @@ let props = {
 		emails: [ 'test@test.com' ],
 		num_rows: 5,
 		human_date: false,
-	}
+	},
 };
 
 jest.mock( '@wordpress/data', () => ( {
@@ -53,7 +53,7 @@ describe( 'Settings Component', () => {
 			.mockReturnValueOnce( [ props.data.num_rows, jest.fn() ] )
 			.mockReturnValueOnce( [ props.data.human_date, jest.fn() ] )
 			.mockReturnValueOnce( [ props.data.emails, jest.fn() ] );
-		const { container } = render( <Settings settings={props} /> );
+		const { container } = render( <Settings settings={ props } /> );
 
 		expect(
 			parseInt(
@@ -84,7 +84,7 @@ describe( 'Settings Component', () => {
 			.mockReturnValueOnce( [ props.data.num_rows, jest.fn() ] )
 			.mockReturnValueOnce( [ props.data.human_date, jest.fn() ] )
 			.mockReturnValueOnce( [ props.data.emails, jest.fn() ] );
-		const { container } = render( <Settings settings={props} /> );
+		const { container } = render( <Settings settings={ props } /> );
 
 		expect( container.querySelector( '#email_1' ).value ).toBe(
 			props.data.emails[ 0 ]

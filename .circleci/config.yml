@@ -63,7 +63,7 @@ job-references:
                   name: Lint PHP
                   command: composer run lint:phpcs
 jobs:
-    lint:
+    lint-php:
         docker:
             - image: circleci/php:7.4
         <<: *php_lint_steps
@@ -127,13 +127,24 @@ jobs:
                   name: Install Packages
                   command: npm install
             - run:
-                  name: Run Js Unit Test
+                  name: Run Js linting
                   command: npm run lint:js
+    lint-css:
+        docker:
+            - image: circleci/php:7.4.16-node-browsers
+        steps:
+            - checkout
+            - run:
+                  name: Install Packages
+                  command: npm install
+            - run:
+                  name: Run Css Linting
+                  command: npm run lint:css
 workflows:
     version: 2
     test_build_deploy:
         jobs:
-            - lint:
+            - lint-php:
                   filters:
                       branches:
                           ignore: /.*-built/
@@ -142,6 +153,10 @@ workflows:
                       branches:
                           ignore: /.*-built/
             - lint-js:
+                  filters:
+                      branches:
+                          ignore: /.*-built/
+            - lint-css:
                   filters:
                       branches:
                           ignore: /.*-built/
@@ -161,8 +176,9 @@ workflows:
                           ignore: /.*-built/
             - build:
                   requires:
-                      - lint
+                      - lint-php
                       - lint-js
+                      - lint-css
                       - test-js
                       - integration-test-php74-wordpress
                       - integration-test-php8-wordpress

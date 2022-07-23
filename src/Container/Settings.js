@@ -13,15 +13,20 @@ export const mapSelectToProps = ( select ) => {
 };
 
 export const mapDispatchToProps = ( dispatch ) => {
-	const { updateEmails, updateRows, updateDateReadable, updateDataLoadFlag, updateDataUpdatedFlag } =
-		dispatch( STORE_NAME );
+	const {
+		updateEmails,
+		updateRows,
+		updateDateReadable,
+		updateDataLoadFlag,
+		updateDataUpdatedFlag,
+	} = dispatch( STORE_NAME );
 
 	return {
 		updateEmails,
 		updateRows,
 		updateDateReadable,
 		updateDataLoadFlag,
-		updateDataUpdatedFlag
+		updateDataUpdatedFlag,
 	};
 };
 

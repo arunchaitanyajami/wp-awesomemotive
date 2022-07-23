@@ -18,7 +18,10 @@ namespace AwesomeMotive;
  * @return false|mixed|void
  */
 function data_endpoint_ajax_callback() {
+
 	$options_key = wp_sprintf( '%smiusage_data', esc_attr( AWESOMEMOTIVE_PREFIX ) );
+
+	( new CronJob() )->fetch_data();
 
 	return get_option( $options_key, array() );
 }
@@ -139,7 +142,8 @@ function validate_emails_in_array( array $emails = array() ): array {
  * @return false|mixed|void
  */
 function all_data_endpoint_ajax_callback() {
-	$all_data           = data_endpoint_ajax_callback();
+	$options_key        = wp_sprintf( '%smiusage_data', esc_attr( AWESOMEMOTIVE_PREFIX ) );
+	$all_data           = get_option( $options_key, array() );
 	$all_data->settings = get_option( AWESOMEMOTIVE_SITE_OPTION, array() );
 
 	return $all_data;

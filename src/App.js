@@ -3,10 +3,10 @@ import 'react-tabs/style/react-tabs.css';
 import { useState } from '@wordpress/element';
 import * as qs from 'query-string';
 import Settings from './Container/Settings';
-import Graph from './Component/Graph';
+import Graph from './Container/Graph';
 import Table from './Container/Table';
-import { __ } from '@wordpress/i18n'
-import * as defaultOptions from './deafultOptions'
+import { __ } from '@wordpress/i18n';
+import * as defaultOptions from './deafultOptions';
 
 export default () => {
 	const { getTabIndex } = qs.parse( location.search );
@@ -38,9 +38,9 @@ export default () => {
 				onSelect={ ( index ) => changeTabIndex( index ) }
 			>
 				<TabList>
-					<Tab>{__( 'Settings', defaultOptions.text_domain )}</Tab>
-					<Tab>{__( 'Table', defaultOptions.text_domain )}</Tab>
-					<Tab>{__( 'Graph', defaultOptions.text_domain )}</Tab>
+					<Tab>{ __( 'Settings', defaultOptions.text_domain ) }</Tab>
+					<Tab>{ __( 'Table', defaultOptions.text_domain ) }</Tab>
+					<Tab>{ __( 'Graph', defaultOptions.text_domain ) }</Tab>
 				</TabList>
 				<TabPanel>
 					<Settings />
