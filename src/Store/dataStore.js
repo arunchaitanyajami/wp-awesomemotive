@@ -25,9 +25,18 @@ const actions = {
     }
   },
 
-  fetchFromAPI () {
+  *reloadData(){
+    const data =  yield actions.fetchFromAPI( 'fetch_data_endpoint' );
+
+    return {
+      type: 'SET_DATA',
+      data,
+    }
+  },
+  *fetchFromAPI ( ajaxAction ) {
     return {
       type: 'FETCH_FROM_API',
+      ajaxAction
     }
   },
 }
@@ -50,18 +59,18 @@ const data = createReduxStore('awesomemotive/data', {
   selectors: {
     getData (state) {
       return state
-    },
+    }
   },
 
   controls: {
-    FETCH_FROM_API (action) { return FETCH_FROM_API({ ajaxActionName: 'all_data' }) },
+    FETCH_FROM_API (action) { return FETCH_FROM_API({ ajaxActionName: action.ajaxAction, ajaxActionType: 'get' }) },
   },
 
   resolvers: {
     * getData () {
-      const data = yield actions.fetchFromAPI()
+      const data = yield actions.fetchFromAPI('all_data_endpoint')
       return actions.setData({ ...data })
-    },
+    }
   },
 })
 
