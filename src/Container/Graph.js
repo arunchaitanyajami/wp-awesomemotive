@@ -7,13 +7,16 @@ export const mapSelectToProps = ( select ) => {
 	const { getData } = select( DATA_STORE_NAME );
 	return {
 		tableData: getData(),
+		isLoading: false
 	};
 };
 
 export const mapDispatchToProps = ( dispatch ) => {
 	const { reloadData } = dispatch( DATA_STORE_NAME );
 
-	return { reloadData };
+	return {
+		reloadData
+	};
 };
 
 export default compose( [

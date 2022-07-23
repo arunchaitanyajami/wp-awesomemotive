@@ -1,24 +1,41 @@
 import { __ } from '@wordpress/i18n';
 import * as defaultOptions from '../deafultOptions';
 import { Icon, rotateRight } from '@wordpress/icons';
+import { useState, useEffect } from '@wordpress/element'
+import { Spinner } from '@wordpress/components';
 
 export default ( { tableData, reloadData } ) => {
 	const maxPageViews = 50000;
 	const { graph, table } = tableData;
+	const [ isLoading, setIsLoading ] = useState(false);
 
 	const covertData = ( timeStamp ) => {
 		return new Date( timeStamp * 1000 ).toDateString();
 	};
 
+	/**
+	 * Fetch data from source.
+	 */
+	const loadData = () => {
+		setIsLoading(true)
+		reloadData()
+	}
+
+	useEffect(() => {
+		setIsLoading(tableData.isLoading)
+	}, [tableData])
+	
+
 	return (
 		<div className={ 'awesomemotive-container' }>
 			<div className={ 'awesomemotive-graph-reload' }>
-				<div onClick={ reloadData }>
+				<div onClick={ loadData }>
 					<Icon icon={ rotateRight } />
 				</div>
 			</div>
 			<div className={ 'awesomemotive-graph-container' }>
-				{ table && Object.keys( graph ).length > 0 && (
+				{ isLoading && <Spinner /> }
+				{ !isLoading && table && Object.keys( graph ).length > 0 && (
 					<table className="graph">
 						{ table.title && (
 							<caption>
@@ -61,7 +78,7 @@ export default ( { tableData, reloadData } ) => {
 						</tbody>
 					</table>
 				) }
-				<div style={ { textAlign: 'center' } }>Time Stamp</div>
+				{ !isLoading && ( <div style={ { textAlign: 'center' } }>Time Stamp</div> ) }
 			</div>
 		</div>
 	);

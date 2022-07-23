@@ -29,7 +29,8 @@ describe( 'Graph Component', () => {
 			8: { date: 1658447619, value: 8006 },
 		};
 
-		props.tableData.table.title = 'Test Title';
+		props.tableData.isLoading = false
+		props.tableData.table.title = 'Test Title'
 
 		const { container } = render( <Graph { ...props } /> );
 

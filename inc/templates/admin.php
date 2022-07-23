@@ -10,6 +10,6 @@
 
 ?>
 <div class="wrap">
-	<h1><?php echo esc_html__( 'Awesome Motive', 'awesomemotive-wp-plugin' ); ?></h1>
+	<h1 style="margin-bottom: 10px"><?php echo esc_html__( 'Awesome Motive', 'awesomemotive-wp-plugin' ); ?></h1>
 	<div id="awesomemotive-app"></div>
 </div>

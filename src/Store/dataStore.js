@@ -11,6 +11,7 @@ const DEFAULT_STATE = {
 			rows: {},
 		},
 	},
+	isLoading:false,
 	settings: {
 		...WpamEditorSettings.settings,
 	},
